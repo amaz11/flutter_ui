@@ -86,7 +86,18 @@ class MyAPP extends StatelessWidget {
         '/newPage': (context) => const NewPage(),
       },
       // global theme settings
-      theme: ThemeData(brightness: Brightness.dark),
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        appBarTheme: const AppBarTheme(
+            centerTitle: true,
+            color: Colors.blueAccent,
+            toolbarHeight: 50,
+            shadowColor: Colors.red,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(50),
+                    bottomRight: Radius.circular(50)))),
+      ),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -100,19 +111,45 @@ class MyHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Colors.green[400],
+          // backgroundColor: Colors.green[400],
           title: const Center(
-            child: Text(
-              'Home',
-              style: TextStyle(
-                fontSize: 18.5,
-                color: Colors.white,
-              ),
-            ),
-          )),
+        child: Text(
+          'Home',
+          style: TextStyle(
+            fontSize: 18.5,
+            color: Colors.white,
+          ),
+        ),
+      )),
       body: Container(
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: const TwitterForm()),
+    );
+  }
+}
+
+class ResponsiveDesign extends StatefulWidget {
+  const ResponsiveDesign({super.key});
+
+  @override
+  State<ResponsiveDesign> createState() => _ResponsiveDesignState();
+}
+
+class _ResponsiveDesignState extends State<ResponsiveDesign> {
+  Widget _bigDisplay() {
+    return const Row();
+  }
+
+  Widget _smallDisplay() {
+    return const Column();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    // double height = MediaQuery.of(context).size.height;
+    return Container(
+      child: width > 500 ? _bigDisplay() : _smallDisplay(),
     );
   }
 }
