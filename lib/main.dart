@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/pages/Authentication_service.dart';
+import 'package:flutter_ui/pages/HomePage.dart';
+import 'package:flutter_ui/pages/SignInPage.dart';
 import 'package:provider/provider.dart';
 // import 'package:flutter_ui/pages/APage.dart';
 // import 'package:flutter_ui/pages/NewPage.dart';
@@ -22,6 +24,10 @@ class MyAPP extends StatelessWidget {
       providers: [
         Provider<AuthenticationService>(
             create: (_) => AuthenticationService(FirebaseAuth.instance)),
+        StreamProvider(
+            create: (context) =>
+                context.read<AuthenticationService>().authStateChages,
+            initialData: null)
       ],
       child: MaterialApp(
         // If routes are declared then home key is no longer required.
@@ -123,6 +129,11 @@ class AuthenticatWapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    final firebaseUser = context.watch<User?>();
+    if (firebaseUser != null) {
+      return const HomePage();
+    } else {
+      return const SignInPage();
+    }
   }
 }
