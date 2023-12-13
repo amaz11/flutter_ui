@@ -1,14 +1,4 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_ui/pages/APage.dart';
-// import 'package:flutter_ui/pages/NewPage.dart';
-// import 'package:flutter_ui/pages/TwitterForm.dart';
-
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(const MyAPP());
-}
 
 class MyAPP extends StatelessWidget {
   const MyAPP({super.key});
@@ -85,13 +75,12 @@ class MyAPP extends StatelessWidget {
       // routes: {
       //   '/': (context)=> Page Class Name
       // },
-      // routes: {
-      //   '/': (context) => const MyHome(),
-      //   '/apage': (context) => const APage(),
-      //   '/newPage': (context) => const NewPage(),
-      // },
+      routes: {
+        '/': (context) => const MyHome(),
+        '/apage': (context) => const APage(),
+        '/newPage': (context) => const NewPage(),
+      },
       // global theme settings
-      home: const AuthenticatWapper(),
       theme: ThemeData(
         brightness: Brightness.dark,
         appBarTheme: const AppBarTheme(
@@ -108,12 +97,54 @@ class MyAPP extends StatelessWidget {
     );
   }
 }
+// body: const MyStateFulWidget(),
 
-class AuthenticatWapper extends StatelessWidget {
-  const AuthenticatWapper({super.key});
+class MyHome extends StatelessWidget {
+  const MyHome({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+          // backgroundColor: Colors.green[400],
+          title: const Center(
+        child: Text(
+          'Home',
+          style: TextStyle(
+            fontSize: 18.5,
+            color: Colors.white,
+          ),
+        ),
+      )),
+      body: Container(
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          child: const TwitterForm()),
+    );
+  }
+}
+
+class ResponsiveDesign extends StatefulWidget {
+  const ResponsiveDesign({super.key});
+
+  @override
+  State<ResponsiveDesign> createState() => _ResponsiveDesignState();
+}
+
+class _ResponsiveDesignState extends State<ResponsiveDesign> {
+  Widget _bigDisplay() {
+    return const Row();
+  }
+
+  Widget _smallDisplay() {
+    return const Column();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    // double height = MediaQuery.of(context).size.height;
+    return Container(
+      child: width > 500 ? _bigDisplay() : _smallDisplay(),
+    );
   }
 }
